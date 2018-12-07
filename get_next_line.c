@@ -6,12 +6,12 @@
 /*   By: bebosson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 19:42:12 by bebosson          #+#    #+#             */
-/*   Updated: 2018/12/06 20:46:53 by bebosson         ###   ########.fr       */
+/*   Updated: 2018/12/07 18:46:02 by bebosson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "libft/libft.h"
+#include "libft/incs/libft.h"
 
 int			ft_return_read2(char *t, int fd)
 {
@@ -38,18 +38,17 @@ int			get_next_line(const int fd, char **line)
 	if (fd < 0)
 		return (ft_return_read2(NULL,fd));
 	ret = 1;
-	while (ret > 0)
+	while ((ret > 0))
 	{
-		ret = read(fd, buff, BUFF_SIZE);
+		ret = read(fd, buff, BUFF_SIZE); 
 		buff[ret] = '\0';
 		tmp = ft_strjoin(tmp, buff);
-		if (ft_strchr(tmp, '\n') == NULL)
+
+		if (ft_strchr(tmp, '\n') != NULL)
 			break;
 	}
 	if (ret < 0)
 		return (-1);
-	/*                                   */
-	
 	if (ft_strchr(tmp,'\n') != NULL)
 		t = ft_strsub(tmp, 0, ft_strlen(tmp) - ft_strlen(ft_strchr(tmp, '\n')));
 	else
