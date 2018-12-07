@@ -6,13 +6,13 @@
 /*   By: bebosson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 20:17:19 by bebosson          #+#    #+#             */
-/*   Updated: 2018/12/04 20:38:30 by bebosson         ###   ########.fr       */
+/*   Updated: 2018/12/06 20:27:08 by bebosson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 4096
+# define BUFF_SIZE 100000
 # include <string.h>
 # include <unistd.h>
 # include <stdio.h>

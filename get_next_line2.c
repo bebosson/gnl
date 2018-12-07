@@ -6,7 +6,7 @@
 /*   By: bebosson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 19:42:12 by bebosson          #+#    #+#             */
-/*   Updated: 2018/12/06 20:46:53 by bebosson         ###   ########.fr       */
+/*   Updated: 2018/12/06 20:08:33 by bebosson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,17 @@ int			get_next_line(const int fd, char **line)
 	if (fd < 0)
 		return (ft_return_read2(NULL,fd));
 	ret = 1;
-	while (ret > 0)
+	while (ft_strchr(tmp, '\n') == NULL && ret > 0)
 	{
 		ret = read(fd, buff, BUFF_SIZE);
 		buff[ret] = '\0';
 		tmp = ft_strjoin(tmp, buff);
-		if (ft_strchr(tmp, '\n') == NULL)
-			break;
 	}
 	if (ret < 0)
 		return (-1);
 	/*                                   */
 	
+	printf("tmp_avant_sub = [%s]\n",tmp);
 	if (ft_strchr(tmp,'\n') != NULL)
 		t = ft_strsub(tmp, 0, ft_strlen(tmp) - ft_strlen(ft_strchr(tmp, '\n')));
 	else
@@ -66,6 +65,9 @@ int			get_next_line(const int fd, char **line)
 	}
 	if (tmp != NULL && t != NULL)
 		tmp = ft_strsub(tmp + 1, ft_strlen(t), ft_strlen(tmp) - ft_strlen(t));
+	
+	printf("t = [%s]\n",t);
+	printf("tmp = [%s]\n",tmp);
 	*line = t;
 	return (ft_return_read2(t,fd));
 }
