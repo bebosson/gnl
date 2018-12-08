@@ -6,13 +6,13 @@
 /*   By: bebosson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 19:17:35 by bebosson          #+#    #+#             */
-/*   Updated: 2018/12/07 18:05:06 by bebosson         ###   ########.fr       */
+/*   Updated: 2018/12/08 19:29:53 by bebosson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
 #include <fcntl.h>
 #include <stdio.h>
-
+#include "libft/incs/libft.h"
 int get_next_line(int fd, char **line);
 
 int main(int ac, char **av)
@@ -28,6 +28,5 @@ int main(int ac, char **av)
 		//printf("ret = %d \n",ret);
 		printf("%s\n",line);
 	}
-//	printf("line = [%s]",line);
-	printf("ret = %d \n",ret);
+	//printf("ret = %d \n",ret);
 }
