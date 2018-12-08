@@ -5,66 +5,46 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bebosson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/04 19:42:12 by bebosson          #+#    #+#             */
-/*   Updated: 2018/12/07 18:46:02 by bebosson         ###   ########.fr       */
+/*   Created: 2018/12/08 16:21:08 by bebosson          #+#    #+#             */
+/*   Updated: 2018/12/08 16:24:11 by bebosson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "libft/incs/libft.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int			ft_return_read2(char *t, int fd)
+int		get_next_line(const int fd, char **line)
 {
-	(void)t;
-	(void)fd;
-	int d;
+	int			ret;
+	char		buff[BUFF_SIZE + 1];
+	static char	*tmp;
+	int			i;
 
-	if (fd < 0)
-		d = -1;
-	else
-		d = 1;
-	return (d);
-}
-
-int			get_next_line(const int fd, char **line)
-{
-	int				ret;
-	char			buff[BUFF_SIZE + 1];
-	static char		*tmp = NULL;
-	char			*t;
-
-	if (tmp == NULL)
-		tmp = ft_strnew(1);
-	if (fd < 0)
-		return (ft_return_read2(NULL,fd));
-	ret = 1;
-	while ((ret > 0))
-	{
-		ret = read(fd, buff, BUFF_SIZE); 
-		buff[ret] = '\0';
-		tmp = ft_strjoin(tmp, buff);
-
-		if (ft_strchr(tmp, '\n') != NULL)
-			break;
-	}
-	if (ret < 0)
+	if (fd < 0 || (read(fd, buff, 0) < 0) || BUFF_SIZE < 1)
 		return (-1);
-	if (ft_strchr(tmp,'\n') != NULL)
-		t = ft_strsub(tmp, 0, ft_strlen(tmp) - ft_strlen(ft_strchr(tmp, '\n')));
-	else
-		t = ft_strdup(tmp);
+	if (!tmp)
+		tmp = malloc(sizeof(*tmp) * 2);
 	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
 		tmp = ft_strjoin(tmp, buff);
+		if (ft_strchr(tmp, '\n'))
+			break ;
 	}
-	if (!*tmp)
+	if (ret < 0)
+		return (-1);
+	i = -1;
+	while (tmp[++i])
+		if (tmp[i] == '\n')
+			break ;
+	*line = ft_strsub(tmp, 0, i);
+	if (ft_strlen(tmp))
 	{
-		*line = "\0";
-		return (0);
+		tmp = ft_strsub(tmp, i + 1, ft_strlen(tmp) - ft_strlen(*line));
+		return (1);
 	}
-	if (tmp != NULL && t != NULL)
-		tmp = ft_strsub(tmp + 1, ft_strlen(t), ft_strlen(tmp) - ft_strlen(t));
-	*line = t;
-	return (ft_return_read2(t,fd));
+	return (0);
 }
